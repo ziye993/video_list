@@ -1,29 +1,7 @@
-let defaultUrl;
-let ip
-export const updateIp = async () => {
-  if (ip || defaultUrl) {
-    console.log('ip', ip, " ", defaultUrl)
-    return ip
-  }
-  return await fetch('./ip.json') // 对应public/data.json
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(jsonData => {
-      ip = jsonData.ip;
-      defaultUrl = "http://" + ip
-      return jsonData;
-    })
-    .catch(error => {
-      throw Error("未找到ip")
-    });
-}
+const api = 'http://www.ziye993.cn'
 
 export function fetchGet(path, data = {}) {
-  const url = defaultUrl + path
+  const url = api + path
   // 处理请求参数
   const queryString = Object.keys(data)
     .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
