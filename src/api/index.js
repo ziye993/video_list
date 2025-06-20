@@ -28,3 +28,4 @@ export function fetchGet(path, data = {}) {
       throw error;
     });
 }
+export const ip = api

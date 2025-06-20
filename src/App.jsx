@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { inputPws, isPC, isUploadTimeOverTenMinutes, sortByName, sortByTime } from "./utils";
-import { fetchGet, updateIp } from "./api";
+import { fetchGet, ip } from "./api";
 import VideoController from "./video";
 import showToast from "./components/modal";
 
@@ -25,8 +25,6 @@ const options = [
   { value: 'name_min', label: '名称 z_a' },
 ];
 
-
-let localIp; //'http://192.168.0.106'
 function App() {
   const [data, setData] = useState([]);
   const formRef = useRef(null);
@@ -41,7 +39,7 @@ function App() {
   function formatList(list) {
     return (list || []).map(_ => ({
       ..._,
-      converSrc: `${localIp}/${_.fileName}.png`,
+      converSrc: `${ip}/${_.fileName}.png`,
       atime: _.atime.timestamp,
       atime_f: _.atime.formatted,
 
@@ -105,7 +103,7 @@ function App() {
     const formData = new FormData(formRef.current);
 
     try {
-      const response = await fetch(`${localIp}/upload`, {
+      const response = await fetch(`${ip}/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -135,10 +133,7 @@ function App() {
       undataTime();
       setShow(!Xmin)
     }
-    const { ip } = await updateIp();
-    localIp = "http://" + ip;
     getList();
-    updateIp()
   }
 
   useEffect(() => {
@@ -210,7 +205,7 @@ function App() {
           const date = Date.now();
           return <div className="video-item" key={`list_${index}`} onClick={() => {
             SB(true);
-            SCF(localIp + '/' + item.name);
+            SCF(ip + '/' + item.name);
           }}>
             <img src={item.converSrc} alt={`${item.fileName}`} onError={(e) => { if (!e.target.src.includes(`?t=${date}`)) e.target.src = `${item.converSrc}?t=${date}` }} className="videoCoverImg" />
             <p>{item.fileName}</p>
@@ -229,7 +224,7 @@ function App() {
         <CloseButton />
         <div>
           <h1>Upload File</h1>
-          <form ref={formRef} onSubmit={uploadFile} action={`${localIp}/upload`} method="post" encType="multipart/form-data">
+          <form ref={formRef} onSubmit={uploadFile} action={`${ip}/upload`} method="post" encType="multipart/form-data">
             <input type="file" name="file" required className="selectFile" />
             <input type="submit" value="Upload" className="uploadSubmit" />
           </form>
