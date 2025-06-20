@@ -1,4 +1,7 @@
-const api = 'http://www.ziye993.cn'
+const baseapi = '/videolist'
+
+const api = 'http://www.ziye993.cn/' + baseapi;
+
 
 export function fetchGet(path, data = {}) {
   const url = api + path
