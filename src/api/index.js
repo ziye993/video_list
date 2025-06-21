@@ -34,4 +34,4 @@ export function fetchGet(path, data = {}) {
 }
 export const ip = api
 
-export const fileip = 'http://www.ziye993.cn' + '/videolist/source'
+export const fileip = 'http://www.ziye993.cn' + '/videolist/file'
