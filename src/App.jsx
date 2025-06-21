@@ -39,7 +39,7 @@ function App() {
   function formatList(list) {
     return (list || []).map(_ => ({
       ..._,
-      sourceSrc:`${fileip}/${_.fileName}.${ext}`,
+      sourceSrc:`${fileip}/${_.fileName}.${_.ext}`,
       converSrc: `${fileip}/${_.fileName}.png`,
       atime: _.atime.timestamp,
       atime_f: _.atime.formatted,
