@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import { inputPws, isPC, isUploadTimeOverTenMinutes, sortByName, sortByTime } from "./utils";
-import { fetchGet, ip } from "./api";
+import { fetchGet, fileip ,ip} from "./api";
 import VideoController from "./video";
 import showToast from "./components/modal";
 
@@ -39,7 +39,8 @@ function App() {
   function formatList(list) {
     return (list || []).map(_ => ({
       ..._,
-      converSrc: `${ip}/${_.fileName}.png`,
+      sourceSrc:`${fileip}/${_.fileName}.${ext}`,
+      converSrc: `${fileip}/${_.fileName}.png`,
       atime: _.atime.timestamp,
       atime_f: _.atime.formatted,
 
@@ -205,7 +206,7 @@ function App() {
           const date = Date.now();
           return <div className="video-item" key={`list_${index}`} onClick={() => {
             SB(true);
-            SCF(ip + '/' + item.name);
+            SCF(item.sourceSrc);
           }}>
             <img src={item.converSrc} alt={`${item.fileName}`} onError={(e) => { if (!e.target.src.includes(`?t=${date}`)) e.target.src = `${item.converSrc}?t=${date}` }} className="videoCoverImg" />
             <p>{item.fileName}</p>
